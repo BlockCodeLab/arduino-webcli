@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "bun --watch src/index.js",
     "start": "NODE_ENV=production bun src/index.js",
-    "install": ""
+    "postinstall": "bun arduino/install.js"
   },
   "devDependencies": {
     "@types/bun": "latest"
