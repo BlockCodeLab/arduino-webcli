@@ -1,0 +1,9 @@
+directories:
+  data: "./"
+  user: "./"
+logging:
+  level: "error"
+sketch:
+  always_export_binaries: true
+updater:
+  enable_notification: false
