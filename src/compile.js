@@ -23,13 +23,30 @@ const arduinoCompile = (fqbn, sketch) => {
 const jsonResult = (result) => ({
   success: result.success,
   message: result.error ?? result.message,
-  hex: readFileSync(result.hexFile).toString(),
+  hex: btoa(readFileSync(result.hexFile).toString()),
 });
 
 const fileResult = (result) => (result.success ? file(result.hexFile) : null);
 
 export const compile = (routePath) =>
   new Elysia().use(gui(routePath)).post(routePath, async ({ body }) => {
+    // 解析 JSON 数据
+    if (body.json) {
+      const json = JSON.parse(body.json);
+      body.fqbn = json.fqbn;
+      body.resultType = json.resultType;
+      if (typeof json.sketch === "string") {
+        body.sketch = [new File([atob(json.sketch)], `main.ino`)];
+      }
+      if (Array.isArray(json.sketch)) {
+        const sketch = [];
+        for (const file of body.sketch) {
+          sketch.push(new File([atob(file.content)], file.name));
+        }
+        body.sketch = sketch;
+      }
+    }
+
     // 保存临时 sketch
     const sketchDir = mkdtempSync(resolve(tmpdir(), "sketch_"));
     const mainFile = basename(sketchDir);
@@ -39,7 +56,7 @@ export const compile = (routePath) =>
     if (Array.isArray(body.sketch)) {
       for (const file of body.sketch) {
         const name =
-          basename(file.name, ".c") || extname(file.name) === ".ino"
+          basename(file.name, ".c") === "main" || extname(file.name) === ".ino"
             ? `${mainFile}.ino`
             : file.name;
         writeFileSync(resolve(sketchDir, name), await file.arrayBuffer());
