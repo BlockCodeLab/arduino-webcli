@@ -1,19 +1,20 @@
 /* arduino-cli
  * 命令行工具
  */
-import { cwd } from "node:process";
 import { resolve } from "node:path";
 import { sync as spawnSync } from "cross-spawn";
 
-const arduinoPath = resolve(cwd(), "arduino");
+const DEFAULT_PATH = resolve(process.cwd(), "arduino");
+let arduinoCliPath = DEFAULT_PATH;
 
-export const arduinoCli = (command, ...args) => {
+export const arduinoCliSync = (command, ...args) => {
   const { stderr, stdout } = spawnSync(
     "./arduino-cli",
     ["--json", "--config-dir", "./", command, ...args],
-    {
-      cwd: arduinoPath,
-    },
+    { cwd: arduinoCliPath },
   );
-  return stderr.length > 0 ? stderr : stdout;
+  return stderr?.length > 0 ? stderr : stdout;
 };
+
+export const setArduinoCliPath = (path = DEFAULT_PATH) =>
+  (arduinoCliPath = path);

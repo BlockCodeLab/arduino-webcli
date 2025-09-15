@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 import { html, Html } from "@elysiajs/html";
 import { menubar } from "./menubar";
 
-export const gui = (routePath) =>
+export const libGui = (routePath) =>
   new Elysia().use(html()).get(`${routePath}/gui`, () => (
     <html lang="zh-CN">
       <head>
@@ -14,6 +14,6 @@ export const gui = (routePath) =>
         <link rel="stylesheet" href="///unpkg.com/zui/dist/zui.css" />
         <script src="///unpkg.com/zui/dist/zui.js" />
       </head>
-      <body class="container m-2">{menubar(routePath)}</body>
+      <body class="container my-2">{menubar(routePath)}</body>
     </html>
   ));
