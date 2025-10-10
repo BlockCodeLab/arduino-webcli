@@ -24,11 +24,13 @@ export const arduinoCompile = (fqbn, sketch) => {
 
 const jsonResult = (result) => {
   let hexBase64 = "";
-  try {
-    hexBase64 = btoa(readFileSync(result.hexFile).toString());
-  } catch (err) {
-    result.success = false;
-    result.error = err.message;
+  if (result.success) {
+    try {
+      hexBase64 = btoa(readFileSync(result.hexFile).toString());
+    } catch (err) {
+      result.success = false;
+      result.error = err.message;
+    }
   }
   return {
     success: result.success,
@@ -48,7 +50,7 @@ export const compileRequest = async (body) => {
     }
     if (Array.isArray(json.sketch)) {
       const sketch = [];
-      for (const file of body.sketch) {
+      for (const file of json.sketch) {
         sketch.push(new File([atob(file.content)], file.name));
       }
       body.sketch = sketch;
