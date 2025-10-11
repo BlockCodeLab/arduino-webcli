@@ -37,7 +37,7 @@ const installCore = async (checkbox, routePathGui, id, name) => {
 };
 
 export const coreGui = (routePath) => {
-  const routePathGui = `${routePath}/gui`;
+  const routePathGui = `/gui${routePath}`;
 
   const wrapInstallClick = (id, name) =>
     `(${installCore.toString()})(this, "${routePathGui}", "${id}", "${name}")`;

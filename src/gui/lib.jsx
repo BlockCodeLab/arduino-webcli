@@ -6,7 +6,7 @@ import { html, Html } from "@elysiajs/html";
 import { menubar } from "./menubar";
 
 export const libGui = (routePath) =>
-  new Elysia().use(html()).get(`${routePath}/gui`, () => (
+  new Elysia().use(html()).get(`/gui${routePath}`, () => (
     <html lang="zh-CN">
       <head>
         <meta charset="utf-8" />

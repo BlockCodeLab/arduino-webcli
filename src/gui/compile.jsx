@@ -12,7 +12,7 @@ const submitButton = (inner) =>
   `document.querySelector("#submitButton").innerHTML='${inner}'`;
 
 export const compileGui = (routePath) => {
-  const routePathGui = `${routePath}/gui`;
+  const routePathGui = `/gui${routePath}`;
 
   const fqbnItems = [
     { text: "Arduino UNO", value: "arduino:avr:uno", keys: "avr uno" },
