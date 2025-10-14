@@ -1,8 +1,8 @@
-/* arduino-cli lib
+/*
  * 库管理界面
  */
 import { Elysia } from "elysia";
-import { html, Html } from "@elysiajs/html";
+import { Html, html } from "@elysiajs/html";
 import { menubar } from "./menubar";
 
 export const libGui = (routePath) =>

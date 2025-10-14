@@ -1,15 +1,15 @@
-/* arduino-cli core
+/*
  * 主核管理界面
  */
 import { Elysia } from "elysia";
-import { html, Html } from "@elysiajs/html";
+import { Html, html } from "@elysiajs/html";
 import { menubar } from "./menubar";
 import {
   arduinoCoreList,
   arduinoCoreRemoteList,
   arduinoCoreInstall,
   arduinoCoreUninstall,
-} from "../commands/core";
+} from "../cmds/core";
 
 const installCore = async (checkbox, routePathGui, id, name) => {
   const alert = zui.Messager.show({
@@ -30,9 +30,9 @@ const installCore = async (checkbox, routePathGui, id, name) => {
   zui.Messager.show({
     content:
       `“${name}”${checkbox.checked ? "安装" : "卸载"}` +
-      `${result.success ? "成功。" : `失败${result.message ? `：${result.message}。` : "。"}`}`,
+      `${result.success !== false ? "成功。" : `失败${result.message ? `：${result.message}。` : "。"}`}`,
     placement: "top-right",
-    type: result.success ? "success" : "danger",
+    type: result.success !== false ? "success" : "danger",
   });
 };
 

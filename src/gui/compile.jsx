@@ -1,9 +1,9 @@
-/* arduino-cli compile
+/*
  * 编译界面
  */
-import { Elysia } from "elysia";
-import { html, Html } from "@elysiajs/html";
-import { compileRequest } from "../commands/compile";
+import { Elysia, file as staticFile } from "elysia";
+import { Html, html } from "@elysiajs/html";
+import { compileService } from "../compile_service";
 import { menubar } from "./menubar";
 
 const spinIcon = '<i class="animate-spin icon icon-spinner-indicator"></i>';
@@ -22,7 +22,12 @@ export const compileGui = (routePath) => {
   return new Elysia()
     .use(html())
     .post(routePathGui, async ({ body }) => {
-      const result = await compileRequest(body);
+      const result = await compileService(body);
+
+      // 返回 hex 文件
+      if (body.resultType === "file") {
+        return staticFile(result.hexFile);
+      }
 
       return (
         <html lang="zh-CN">
@@ -44,7 +49,7 @@ export const compileGui = (routePath) => {
                   <input
                     type="text"
                     class="form-control"
-                    value={result.success ? "true" : "false"}
+                    value={result.success !== false ? "true" : "false"}
                     readonly
                   />
                 </div>

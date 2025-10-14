@@ -1,1 +1,0 @@
-export { arduinoService } from "./service";

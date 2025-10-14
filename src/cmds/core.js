@@ -1,14 +1,17 @@
 /* arduino-cli core
  * 主核管理
  */
-import { arduinoCliSync } from "../arduino-cli";
+import { arduinoCliSync } from "./arduino-cli";
 
 export const arduinoCoreRemoteList = () => {
   let result;
   try {
-    result = JSON.parse(arduinoCliSync("core", "search").toString());
+    result = JSON.parse(arduinoCliSync("core", "search").toString() || "{}");
   } catch (err) {
-    result = {};
+    result = {
+      success: false,
+      message: err.message,
+    };
   }
   return result;
 };
@@ -16,9 +19,12 @@ export const arduinoCoreRemoteList = () => {
 export const arduinoCoreList = () => {
   let result;
   try {
-    result = JSON.parse(arduinoCliSync("core", "list").toString());
+    result = JSON.parse(arduinoCliSync("core", "list").toString() || "{}");
   } catch (err) {
-    result = {};
+    result = {
+      success: false,
+      message: err.message,
+    };
   }
   return result;
 };
@@ -29,7 +35,6 @@ export const arduinoCoreInstall = (id) => {
     result = JSON.parse(
       arduinoCliSync("core", "install", id).toString() || "{}",
     );
-    result.success = true;
   } catch (err) {
     result = {
       success: false,
@@ -45,7 +50,6 @@ export const arduinoCoreUninstall = (id) => {
     result = JSON.parse(
       arduinoCliSync("core", "uninstall", id).toString() || "{}",
     );
-    result.success = true;
   } catch (err) {
     result = {
       success: false,

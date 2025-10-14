@@ -1,7 +1,7 @@
 {
   "name": "arduino-webcli",
   "private": "true",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Yeqin Gong",
     "email": "gon@gyeq.in",
@@ -15,7 +15,7 @@
     "start2": "bun run start -- -i 2",
     "stop": "pm2 stop start && pm2 delete start",
     "list": "pm2 list",
-    "build": "NODE_ENV=production bun build --entrypoints src/index.js --outdir dist --target node --format cjs",
+    "build": "NODE_ENV=production bun build --entrypoints src/service.js --entry-naming index.js --outdir dist --target node --format cjs",
     "postinstall": "bun run build && bun arduino/install.js"
   },
   "devDependencies": {
