@@ -78,11 +78,11 @@ export const coreGui = (routePath) => {
           </head>
           <body class="container my-2">
             {menubar(routePath)}
-            <table class="table table-striped table-hover bordered m-2">
+            <table class="table table-striped table-hover bordered m-2 mt-4">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>主核名</th>
+                  <th>主核名称</th>
                   <th>提供者</th>
                   <th>可用开发板</th>
                   <th>安装版本</th>
@@ -118,6 +118,7 @@ export const coreGui = (routePath) => {
                           platform.installed_version ? (
                             <input
                               type="checkbox"
+                              id={platform.id}
                               onclick={wrapInstallClick(
                                 platform.id,
                                 platform.releases[platform.latest_version].name,
@@ -127,13 +128,16 @@ export const coreGui = (routePath) => {
                           ) : (
                             <input
                               type="checkbox"
+                              id={platform.id}
                               onclick={wrapInstallClick(
                                 platform.id,
                                 platform.releases[platform.latest_version].name,
                               )}
                             />
                           )}
-                          <label>{platform.installed_version}</label>
+                          <label for={platform.id}>
+                            {platform.installed_version}
+                          </label>
                         </div>
                       </td>
                       <td>{platform.latest_version}</td>

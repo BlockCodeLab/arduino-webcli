@@ -3,7 +3,7 @@
  */
 import { Elysia, file as staticFile } from "elysia";
 import { Html, html } from "@elysiajs/html";
-import { compileService } from "../compile_service";
+import { compileService } from "../service";
 import { menubar } from "./menubar";
 
 const spinIcon = '<i class="animate-spin icon icon-spinner-indicator"></i>';
