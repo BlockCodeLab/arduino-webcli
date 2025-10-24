@@ -17,12 +17,15 @@ export function arduinoService(cfg = {}) {
       .use(compileGui("/compile")) // 编译测试
       .use(coreGui("/core")) // 主核管理
       .use(libGui("/lib")); // 库管理
+
+    // 生产模式下开启管理界面不再单独启动编译服务
+    if (process.env.NODE_ENV === "production") {
+      return app;
+    }
   }
 
   // 开启编译服务
-  else {
-    app.post("/compile", ({ body }) => compileService(body));
-  }
+  app.post("/compile", ({ body }) => compileService(body));
 
   return app;
 }

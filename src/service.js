@@ -17,7 +17,7 @@ const jsonResult = (result) => {
   }
   return {
     success: result.success !== false,
-    message: result.error ?? result.message,
+    message: result.compiler_err || result.error || result.message,
     hex: hexBase64,
   };
 };
