@@ -115,7 +115,7 @@ export const libGui = (routePath) => {
                 </tr>
               </thead>
               <tbody>
-                {allLibs.map((item) => {
+                {allLibs?.map((item) => {
                   const lib =
                     item.library ??
                     Object.assign({ name: item.name }, item.latest);
